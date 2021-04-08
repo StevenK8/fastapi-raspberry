@@ -150,3 +150,52 @@ sudo apt install python-mysqldb
 */5 * * * * python3 /home/pi/Timelapse/logger-temp-hum.py &> /dev/null
 ```
 
+## Services
+
+sudo nano /etc/systemd/system/fastapi.service
+```bash
+[Unit]
+Description=Fastapi server      
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+ExecStart=/home/pi/.local/bin/uvicorn main:app --reload --host 192.168.1.21  
+Type=simple
+User=pi   
+Group=pi   
+WorkingDirectory=/home/pi/Timelapse/app
+Restart=on-failure
+```
+
+```bash
+systemctl daemon-reload
+
+systemctl enable fastapi.service
+```
+
+sudo nano /etc/systemd/system/sshtunnel.service
+
+```bash
+[Unit]
+Description=SSH tunnel for fastapi
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+ExecStart=ssh -L 8000:127.0.0.1:8000 atticus@ryzen.ddns.net -P 6622
+Type=simple
+User=pi
+Group=pi
+WorkingDirectory=/home/pi
+Restart=on-failure
+```
+
+```bash
+systemctl daemon-reload
+
+systemctl enable sshtunnel.service
+```
+
