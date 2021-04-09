@@ -211,3 +211,12 @@ sudo ssh-copy-id -i /root/.ssh/id_ecdsa_tunnel.pub tunnel@ryzen.ddns.net -p 6622
 
 sudo ssh -i /root/.ssh/id_ecdsa_tunnel -R 8000:*:8000 -N tunnel@ryzen.ddns.net -p 6622
 ```
+
+```bash
+Match User tunnel
+  AllowTcpForwarding yes
+  PermitOpen *:8000
+  X11Forwarding no
+  AllowAgentForwarding no
+  GatewayPorts yes
+```
