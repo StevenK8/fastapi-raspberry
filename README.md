@@ -136,15 +136,15 @@ pip3 install pymysql
 
 [FastAPI](https://fastapi.tiangolo.com/)
 
-# Capteur DHT
+## Capteur DHT
 
-## Dépendances
+### Dépendances
 
 ```bash
 sudo apt install python-mysqldb
 ```
 
-## Crontab
+### Crontab
 
 ```bash
 */5 * * * * python3 /home/pi/Timelapse/logger-temp-hum.py &> /dev/null
