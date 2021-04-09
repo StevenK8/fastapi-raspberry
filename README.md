@@ -224,6 +224,7 @@ sudo ssh-copy-id -i /root/.ssh/id_ecdsa_tunnel.pub tunnel@ryzen.ddns.net -p 6622
 sudo ssh -i /root/.ssh/id_ecdsa_tunnel -R \*8000:localhost:8000 -N tunnel@ryzen.ddns.net -p 6622
 ```
 
+/etc/ssh/sshd_config
 ```bash
 Match User tunnel
   AllowTcpForwarding yes
