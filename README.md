@@ -161,6 +161,7 @@ Description=Fastapi server
 WantedBy=multi-user.target
 
 [Service]
+ExecStartPre=/bin/sleep 30
 ExecStart=/home/pi/.local/bin/uvicorn main:app --reload --host 192.168.1.21  
 Type=simple
 User=pi   
@@ -185,11 +186,12 @@ Description=SSH tunnel for fastapi
 WantedBy=multi-user.target
 
 [Service]
-ExecStart=ssh -L 8000:127.0.0.1:8000 atticus@ryzen.ddns.net -P 6622
+ExecStart=ssh -i /root/.ssh/id_ecdsa_tunnel -R 8000:*:8000 -N tunnel@ryzen.ddns.net -p 6622
+ExecStartPre=/bin/sleep 45
 Type=simple
-User=pi
-Group=pi
-WorkingDirectory=/home/pi
+User=root
+Group=root
+WorkingDirectory=/root
 Restart=on-failure
 ```
 
@@ -199,3 +201,13 @@ systemctl daemon-reload
 systemctl enable sshtunnel.service
 ```
 
+```bash
+sudo ssh-keygen -t ecdsa -b 521 -f /root/.ssh/id_ecdsa_tunnel
+
+sudo chmod 600 /root/.ssh/id_ecdsa_tunnel
+sudo chmod 600 /root/.ssh/id_ecdsa_tunnel.pub
+
+sudo ssh-copy-id -i /root/.ssh/id_ecdsa_tunnel.pub tunnel@ryzen.ddns.net -p 6622
+
+sudo ssh -i /root/.ssh/id_ecdsa_tunnel -R 8000:*:8000 -N tunnel@ryzen.ddns.net -p 6622
+```
