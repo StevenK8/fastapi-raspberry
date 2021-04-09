@@ -162,7 +162,7 @@ WantedBy=multi-user.target
 
 [Service]
 ExecStartPre=/bin/sleep 30
-ExecStart=/home/pi/.local/bin/uvicorn main:app --reload --host 192.168.1.21  
+ExecStart=/home/pi/.local/bin/uvicorn main:app --reload --host 0.0.0.0
 Type=simple
 User=pi   
 Group=pi   
