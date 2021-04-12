@@ -33,6 +33,7 @@ cd Timelapse/app
 uvicorn main:app --reload --host 192.168.1.21
 ```
 
+
 6. Accès à la doc:
 ```bash
 http://192.168.1.21:8000/docs
@@ -161,7 +162,7 @@ Description=Fastapi server
 WantedBy=multi-user.target
 
 [Service]
-ExecStartPre=/bin/sleep 30
+After=network.target
 ExecStart=/home/pi/.local/bin/uvicorn main:app --reload --host 0.0.0.0
 Type=simple
 User=pi   
@@ -186,9 +187,9 @@ Description=SSH tunnel for fastapi
 WantedBy=multi-user.target
 
 [Service]
-ExecStart=bash /root/tunnel.sh
-ExecStartPre=/bin/sleep 45
-Type=simple
+ExecStart=screen -dmS tunnel /root/tunnel.sh
+After=network.target
+Type=forking
 User=root
 Group=root
 WorkingDirectory=/root
@@ -208,6 +209,8 @@ done
 ```
 
 ```bash
+sudo chmod +x tunnel.sh
+
 systemctl daemon-reload
 
 systemctl enable sshtunnel.service
@@ -233,3 +236,5 @@ Match User tunnel
   AllowAgentForwarding no
   GatewayPorts yes
 ```
+
+https://www.linuxtricks.fr/wiki/ssh-creer-un-tunnel-pour-rediriger-des-ports-d-une-machine-a-l-autre
