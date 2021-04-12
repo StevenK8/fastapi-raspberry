@@ -238,3 +238,5 @@ Match User tunnel
 ```
 
 https://www.linuxtricks.fr/wiki/ssh-creer-un-tunnel-pour-rediriger-des-ports-d-une-machine-a-l-autre
+
+https://www.it-react.com/index.php/2020/01/06/how-to-setup-reverse-ssh-tunnel-on-linux/
