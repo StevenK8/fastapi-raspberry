@@ -1,0 +1,17 @@
+[Unit]
+Description=Fastapi server      
+ 
+[Install]
+WantedBy=multi-user.target
+ 
+[Service]
+After=network.target
+ExecStart=/home/pi/.local/bin/uvicorn main:app --reload --host 0.0.0.0
+Type=simple
+User=pi   
+Group=pi   
+WorkingDirectory=/home/pi/Timelapse/app
+Restart=on-failure
+systemctl daemon-reload
+ 
+systemctl enable fastapi.service
